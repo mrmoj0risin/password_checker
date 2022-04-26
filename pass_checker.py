@@ -24,20 +24,19 @@ def pwned_api_check(password):
     hashed_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     five_chars, tail = hashed_password[:5], hashed_password[5:]
     response = request_api_password(five_chars)
-    # print(response)
-    # print(five_chars,tail)
+
     return get_password_leaks_count(response, tail)
 
 
 def main(args):
-  for password in args:
-    count = pwned_api_check(password)
-    if count:
-      print(f'{password} was found {count} times... you should probably change your password!')
-    else:
-      print(f'{password} was NOT found. Carry on!')
-  return '\n \n done!'
+    for password in args:
+        count = pwned_api_check(password)
+        if count:
+            print(f'{password} was found {count} times... you should probably change your password!')
+        else:
+            print(f'{password} was NOT found. Carry on!')
+    return '\n \n done!'
 
 
 if __name__ == '__main__':
-  sys.exit(main(sys.argv[1:]))
+    sys.exit(main(sys.argv[1:]))
